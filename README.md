@@ -18,7 +18,7 @@ Items can fall off the end of a series of belts, splitters, and underground belt
  * Use direct insertion between buildings, furnace to assembler to assembler
  * Use circuits and/or smart inserters to avoid over-production
 
-## Minimizing damage from overflow:
+## Minimising damage from overflow:
  * Ensure no belt terminates near another belt
  * Use splitter filters or smart inserters to filter trash from belts before they reach your assemblers
  
