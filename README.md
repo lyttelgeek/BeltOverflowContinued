@@ -1,4 +1,4 @@
-# Belt Overflow Continued v1.0.0
+# Belt Overflow Continued
 
 Causes all end-belts to dump their items on the ground. Whenever items on a belt are unable to proceed ahead smoothly, they will fall off the belt onto a nearby tile. That tile might be empty, or it could be onto another belt, wreaking havoc on your production line.
 
