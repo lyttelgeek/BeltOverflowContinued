@@ -15,9 +15,8 @@ Items can fall off the end of a series of belts, splitters, and underground belt
 
 ---
 
-## Installation
-Download the release zip and place in your Factorio mods folder.
+## Current Version
+
+[v1.0.0 - Initial Stable Release](https://github.com/lyttelgeek/BeltOverflowContinued/releases/tag/1.0.0-Initial_Release)
 
 ---
-
-Feedback, suggestions, and criticisms encouraged and appreciated.
