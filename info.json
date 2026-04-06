@@ -1,0 +1,12 @@
+{
+  "name": "BeltOverflowContinued",
+  "version": "1.0.0",
+  "title": "Belt Overflow Continued",
+  "author": "nzungu",
+  "homepage": "https://github.com/lyttelgeek/BeltOverflowContinued",
+  "description": "Continuation of Belt Overflow mod by GopherAtl and Sparr. Causes belts to overflow at the end as soon as items reach the terminal tile.",
+  "factorio_version": "2.0",
+  "dependencies": [
+    "base >= 2.0.0"
+  ]
+}
