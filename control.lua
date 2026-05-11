@@ -305,6 +305,38 @@ end
 ---@field entity BeltLikeEntity
 ---@field entity_to_ignore? BeltLikeEntity
 
+---Filter splitter terminal lines based on output priority.
+---If a splitter has output priority set and the priority output has a valid
+---target ahead, exclude unprioritised lines from being marked terminal.
+---This prevents unprioritised outputs from overflowing when the priority
+---output is still available.
+---@param entity BeltLikeEntity
+---@param base_lines integer[]
+---@return integer[]
+local function filter_splitter_priority_lines(entity, base_lines)
+  local priority = entity.splitter_output_priority
+  if not priority then return base_lines end
+
+  -- Determine which lines are prioritized based on output direction
+  -- Left output: lines 5,6  |  Right output: lines 7,8
+  local priority_lines = (priority == "left") and {5, 6} or {7, 8}
+
+  -- Check if the priority output has a valid target ahead
+  local ahead = rotate_offset(0, -1, entity.direction)
+  local priority_offset = (priority == "left") and -0.5 or 0.5
+  local r = rotate_offset(priority_offset, 0, entity.direction)
+  local tx, ty = entity.position.x + ahead.px + r.px, entity.position.y + ahead.py + r.py
+  local target = find_belt_at(entity.surface, tx, ty, false)
+
+  -- If priority output has a valid target (not a splitter), only mark priority lines as terminal
+  if target and target.type ~= "splitter" then
+    return priority_lines
+  end
+
+  -- If priority output is blocked/unavailable, mark all lines as terminal
+  return base_lines
+end
+
 local function terminal_belt_lines(args)
   local entity           = args.entity
   local entity_to_ignore = args.entity_to_ignore
@@ -358,7 +390,7 @@ local function terminal_belt_lines(args)
         push(check.lines)
       elseif ((target.type=="underground-belt" and target.belt_to_ground_type=="output")
            or (target.type=="linked-belt"      and target.linked_belt_type=="output"))
-          and td == entity_direction then
+        and td == entity_direction then
         push(check.lines)
       elseif target.type == "splitter" and td ~= entity_direction then
         push(check.lines)
@@ -418,7 +450,9 @@ local function terminal_belt_lines(args)
     end
   end
 
-  if entity_type == "splitter" and #result_lines > 0 then return {5,6,7,8} end
+  if entity_type == "splitter" and #result_lines > 0 then
+    result_lines = filter_splitter_priority_lines(entity, result_lines)
+  end
   return result_lines
 end
 
